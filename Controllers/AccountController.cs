@@ -71,7 +71,7 @@ public class AccountController : Controller
         var user = _dbContext.AppUsers.FirstOrDefault(ap => ap.Email == model.Email);
         if (user == null)
         {
-            ModelState.AddModelError(" ","Invalid credentials");
+            ModelState.AddModelError("","Invalid credentials");
             return View(model);
         }
 

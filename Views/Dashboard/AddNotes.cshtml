@@ -1,0 +1,33 @@
+@model Application_Auth.Models.UserNote
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Add notes</title>
+</head>
+<body>
+<div>
+    
+    <form asp-action="AddNotes" asp-controller="DashBoard" method="post">
+        <label asp-for="Title"></label>
+        <input asp-for="Title"/>
+        <span asp-validation-for="Title"></span>
+        
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content"></textarea>
+        <span asp-validation-for="Content"></span>
+        
+        <button type="submit">Add</button>
+        
+    </form>
+    
+    <a href="/DashBoard/Index">Back to Dashboard</a>
+    
+</div>
+</body>
+</html>

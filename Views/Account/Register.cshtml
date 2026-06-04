@@ -1,0 +1,30 @@
+@model RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+<div>
+    <form asp-action="Register" asp-controller="Account" method="post">
+        <label asp-for="Email"></label>
+        <input asp-for="Email"/>
+        <span asp-validation-for="Email"></span>
+        
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password"/>
+        <span asp-validation-for="Password"></span>
+        
+        <button type="submit">Register</button>
+    </form>
+    
+    
+</div>
+</body>
+</html>

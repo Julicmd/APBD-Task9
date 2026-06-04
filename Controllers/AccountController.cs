@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using Application_Auth.Data;
 using Application_Auth.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,7 +61,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public Task<IActionResult> Login(LoginViewModel model)
+    public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -80,7 +82,27 @@ public class AccountController : Controller
             return View(model);
         }
 
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        };
+
+        var identify = new ClaimsIdentity(claims, "CookieAuth");
+        var principal = new ClaimsPrincipal(identify);
         
+        await HttpContext.SignInAsync("CookieAuth", principal);
+
+
+        return RedirectToAction("Index", "Dashboard");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync("CookieAuth");
+        return RedirectToAction("Login");
     }
     
 }

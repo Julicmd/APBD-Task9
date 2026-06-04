@@ -28,6 +28,23 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    
+    if (!db.AppUsers.Any(u => u.Role == "Admin"))
+    {
+        db.AppUsers.Add(new Application_Auth.Models.AppUser
+        {
+            Email = "admin@admin.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin1234"),
+            Role = "Admin",
+            CreatedAt = DateTime.UtcNow
+        });
+        db.SaveChanges();
+    }
+}
+
 app.UseHttpsRedirection();
 app.UseRouting();
 

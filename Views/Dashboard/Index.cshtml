@@ -12,7 +12,7 @@
 <body>
 <h2>Your notes</h2>
 
-@if (Model.Count == 0)
+@if (Model == null || !Model.Any())
 {
     <p>You have no notes yet.</p>
 }

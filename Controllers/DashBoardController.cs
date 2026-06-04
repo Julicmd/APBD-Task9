@@ -21,7 +21,7 @@ public class DashBoardController :Controller
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var notes = _dbContext.UserNotes.Where(un =>un.AppUserId == userId).ToList();
         
-        return View();
+        return View(notes);
     }
     
     [HttpGet]
